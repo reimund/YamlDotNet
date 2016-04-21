@@ -47,9 +47,9 @@ namespace YamlDotNet.Serialization.Converters
             return new System.Guid(value);
         }
 
-        public void WriteYaml(Core.IEmitter emitter, object value, System.Type type)
+        public void WriteYaml(Core.IEmitter emitter, IObjectDescriptor value, IObjectGraphTraversalStrategy traversalStrategy, IObjectGraphVisitor visitor)
         {
-            var guid = (System.Guid) value;
+            var guid = (System.Guid) value.Value;
             emitter.Emit(new Core.Events.Scalar(null, null, guid.ToString("D"), jsonCompatible ? ScalarStyle.DoubleQuoted : ScalarStyle.Any, true, false));
         }
     }

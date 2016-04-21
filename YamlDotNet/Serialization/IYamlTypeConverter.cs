@@ -42,6 +42,6 @@ namespace YamlDotNet.Serialization
         /// <summary>
         /// Writes the specified object's state to a YAML emitter.
         /// </summary>
-        void WriteYaml(IEmitter emitter, object value, Type type);
+        void WriteYaml(IEmitter emitter, IObjectDescriptor value, IObjectGraphTraversalStrategy traversalStrategy, IObjectGraphVisitor visitor);
     }
 }

@@ -154,7 +154,7 @@ namespace YamlDotNet.Serialization
         {
             IObjectGraphVisitor emittingVisitor = new EmittingObjectGraphVisitor(eventEmitter);
 
-            emittingVisitor = new CustomSerializationObjectGraphVisitor(emitter, emittingVisitor, Converters);
+            emittingVisitor = new CustomSerializationObjectGraphVisitor(emitter, emittingVisitor, Converters, traversalStrategy);
 
             if (!IsOptionSet(SerializationOptions.DisableAliases))
             {

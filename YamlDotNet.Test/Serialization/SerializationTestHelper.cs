@@ -305,9 +305,9 @@ namespace YamlDotNet.Test.Serialization
             return new MissingDefaultCtor(value);
         }
 
-        public void WriteYaml(IEmitter emitter, object value, Type type)
+        public void WriteYaml(IEmitter emitter, IObjectDescriptor value, IObjectGraphTraversalStrategy traversalStrategy, IObjectGraphVisitor visitor)
         {
-            emitter.Emit(new Scalar(((MissingDefaultCtor) value).Value));
+            emitter.Emit(new Scalar(((MissingDefaultCtor) value.Value).Value));
         }
     }
 

@@ -29,11 +29,15 @@ namespace YamlDotNet.Serialization.ObjectGraphVisitors
     {
         private readonly IEmitter emitter;
         private readonly IEnumerable<IYamlTypeConverter> typeConverters;
+        private readonly IObjectGraphVisitor nextVisitor;
+        private readonly IObjectGraphTraversalStrategy traversalStrategy;
 
-        public CustomSerializationObjectGraphVisitor(IEmitter emitter, IObjectGraphVisitor nextVisitor, IEnumerable<IYamlTypeConverter> typeConverters)
+        public CustomSerializationObjectGraphVisitor(IEmitter emitter, IObjectGraphVisitor nextVisitor, IEnumerable<IYamlTypeConverter> typeConverters, IObjectGraphTraversalStrategy traversalStrategy)
             : base(nextVisitor)
         {
             this.emitter = emitter;
+            this.nextVisitor = nextVisitor;
+            this.traversalStrategy = traversalStrategy;
             this.typeConverters = typeConverters != null
                 ? typeConverters.ToList()
                 : Enumerable.Empty<IYamlTypeConverter>();
@@ -44,7 +48,7 @@ namespace YamlDotNet.Serialization.ObjectGraphVisitors
             var typeConverter = typeConverters.FirstOrDefault(t => t.Accepts(value.Type));
             if (typeConverter != null)
             {
-                typeConverter.WriteYaml(emitter, value.Value, value.Type);
+                typeConverter.WriteYaml(emitter, value, traversalStrategy, nextVisitor);
                 return false;
             }
 
